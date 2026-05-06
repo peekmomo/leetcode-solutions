@@ -40,21 +40,47 @@
  * @param {ListNode} head
  * @return {boolean}
  */
- //思路：首先进行判断改节点是否为空
- //进行判断将该节点存在数组中
- //反转之后和反转之前一样
-var isPalindrome = function(head) {
-    let isSimpe=true
-    let arr=[]
-    for(let i=0;i<head.length;i++){
-        arr.push(head[i])
+
+var mergeTwoLists = function(list1, list2) {
+    let head1=list1
+    let head2=list2
+    const newlist=new ListNode(-1)
+    let newhead=newlist
+    while(head1 && head2){
+        if(head1.val>head2.val){
+            newhead.next=head2
+           head2=head2.next
+        }else{
+           newhead.next=head1
+           head1=head1.next
+        }
+        newhead=newhead.next
     }
-    arr=arr.reverse()
-    for(let i=0;i<arr.length;i++){
-        if(arr[i]!=head[i]){
-            console.log(arr[i],head[i])
-            isSimpe=false
+    newhead.next=head1 || head2
+    return newlist.next 
+};
+
+
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+ //思路：环就是链尾到链表中某一位
+ //环状链表不会又next=null,只能使用快慢指针
+ //快指针每次走两步，但是慢指针每次走一步，进行判断fast==slow
+var hasCycle = function(head) {
+    let slow=head
+    let fast=head
+    let isPos=false
+    while(fast&& fast.next){
+        
+        slow=slow.next
+        fast=fast.next.next
+        if(fast==slow){
+            isPos=true
+            return isPos
         }
     }
-    return isSimpe
+    return isPos
 };
+ 
