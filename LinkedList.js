@@ -85,38 +85,58 @@ var hasCycle = function(head) {
 };
  
 
-var addTwoNumbers = function(l1, l2) {
-   let dummy = new ListNode(0)
-    let cur = dummy
-    let carry = 0
-    while (l1 || l2 || carry) {
-        let v1 = l1 ? l1.val : 0
-        let v2 = l2 ? l2.val : 0
-        let sum = v1 + v2 + carry
-        carry = Math.floor(sum / 10)
-        cur.next = new ListNode(sum % 10)
-        cur = cur.next
-        if (l1) l1 = l1.next
-        if (l2) l2 = l2.next
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} n
+ * @return {ListNode}
+ */
+var removeNthFromEnd = function(head, n) {
+     const dummy = new ListNode(0, head); 
+    let fast = dummy;
+    let slow = dummy;
+    for (let i = 0; i < n; i++) {
+        fast = fast.next;
     }
-    return dummy.next  
+    while (fast.next !== null) {
+        fast = fast.next;
+        slow = slow.next;
+    }
+
+    slow.next = slow.next.next;
+    
+    return dummy.next;
 };
 
-var mergeTwoLists = function(list1, list2) {
-    let head1=list1
-    let head2=list2
-    const newlist=new ListNode(-1)
-    let newhead=newlist
-    while(head1 && head2){
-        if(head1.val>head2.val){
-            newhead.next=head2
-           head2=head2.next
-        }else{
-           newhead.next=head1
-           head1=head1.next
-        }
-        newhead=newhead.next
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var swapPairs = function(head) {
+     const dummy = new ListNode(0, head);
+    let prev = dummy;
+    
+    while (prev.next !== null && prev.next.next !== null) {
+        const first = prev.next;
+        const second = prev.next.next;
+        first.next = second.next;
+        second.next = first;
+        prev.next = second;
+        prev = first;
     }
-    newhead.next=head1 || head2
-    return newlist.next 
+    
+    return dummy.next;
 };
