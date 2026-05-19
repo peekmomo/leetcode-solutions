@@ -71,3 +71,20 @@ var rotate = function(matrix) {
         }
     }
 };
+
+var searchMatrix = function(matrix, target) {
+    let m=matrix.length
+    let n=matrix[0].length
+    let row=0
+    let col=n-1
+    while(row<m&& col>=0){
+       if(target==matrix[row][col]){
+           return true
+       }else if(target>matrix[row][col]){
+           row++
+       }else if(target<matrix[row][col]){
+           col--
+       }
+    }
+    return false
+};
