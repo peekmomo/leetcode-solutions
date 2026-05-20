@@ -161,3 +161,25 @@ var swapPairs = function(head) {
     return list.next
 
 };
+
+ //思路：首先创建一个首节点
+ //首先将lists进行扁平化，变成一维数组，接着进行sort排序，从低到高，再使用链表进行连接
+ var mergeKLists = function(lists) {
+    let deadfirst=new ListNode(0)
+    let head=deadfirst
+    let newarr=[]
+    for(let i=0;i<lists.length;i++){
+        let node=lists[i]
+        while(node){
+            newarr.push(node.val)
+            node=node.next
+        }
+    }
+    let sortarr=newarr.sort((a,b)=>a-b)
+    for(let i=0;i<sortarr.length;i++){
+        head.next=new ListNode(sortarr[i])
+        head=head.next
+    }
+    return deadfirst.next
+
+};
