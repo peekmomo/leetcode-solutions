@@ -183,3 +183,31 @@ var swapPairs = function(head) {
     return deadfirst.next
 
 };
+
+var copyRandomList = function(head) {
+    if (!head) return null;
+    let cur = head;
+    while (cur) {
+        const copy = new _Node(cur.val);
+        copy.next = cur.next;
+        cur.next = copy;
+        cur = copy.next;
+    }
+    cur = head;
+    while (cur) {
+        if (cur.random) {
+            cur.next.random = cur.random.next;
+        }
+        cur = cur.next.next;
+    }
+    const dummy = new _Node(0);
+    let newCur = dummy;
+    cur = head;
+    while (cur) {
+        newCur.next = cur.next;
+        newCur = newCur.next;
+        cur.next = cur.next.next;
+        cur = cur.next;
+    }
+    return dummy.next;
+};
