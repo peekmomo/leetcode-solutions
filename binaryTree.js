@@ -93,3 +93,38 @@ var sortedArrayToBST = function(nums) {
   root.right=sortedArrayToBST(nums.slice(midnum+1))
   return root
 };
+
+//二叉树搜索第K小
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} k
+ * @return {number}
+ */
+ //思路：对二叉树进行遍历，用一个数组将所有二叉树中元素都进行放在数组中
+ //
+var kthSmallest = function(root, k) {
+    if(!root) return
+    const arr=deepNode(root)
+    arr.sort((a, b) => a - b)
+    return arr[k-1]
+    
+};
+function deepNode(node){
+    //进行判断 假如节点为空，直接return
+    if(!node){
+        return []
+    }
+    //节点存在，将这个节点返回，并且递归调用这个节点的left和right
+    
+    return [node.val,...deepNode(node.left),
+    ...deepNode(node.right)]
+    
+}
