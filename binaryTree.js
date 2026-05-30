@@ -128,3 +128,39 @@ function deepNode(node){
     ...deepNode(node.right)]
     
 }
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+ //思路，同层进行遍历，判断规则
+  //先判断右节点的右节点，在判断右节点的左节点 左节点的右节点 左节点的左节点
+var rightSideView = function(root) {
+    let queue=[root]
+   
+    const arr=[]
+    if(!root) return []
+    //先判断层级数，然后进行遍历，先遍历右节点，再遍历左节点
+    //当i=0的时候代表这个是right或者唯一的一个节点
+    while(queue.length){
+        let treeSize=queue.length
+        for(let i=0;i<treeSize;i++){
+            let node=queue.shift()
+            if(i === 0){
+                arr.push(node.val)
+            }
+           if(node.right) queue.push(node.right)
+           if(node.left) queue.push(node.left)
+            
+        }
+    }
+    return arr
+};
