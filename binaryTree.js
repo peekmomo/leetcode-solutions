@@ -164,3 +164,67 @@ var rightSideView = function(root) {
     }
     return arr
 };
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {number[]} preorder
+ * @param {number[]} inorder
+ * @return {TreeNode}
+ */
+ //先序遍历 中序遍历
+var buildTree = function(preorder, inorder) {
+    if(preorder.length==1) return new TreeNode(preorder[0])
+    if(preorder.length===0) return null
+    //先序遍历：根->左->右
+    //中序遍历:左->根->右
+    let root=new TreeNode(preorder[0])
+    //找到根节点在中序遍历的位置，左边是左子树，右边是右子树
+    let inorderIndex=inorder.indexOf(preorder[0])
+    //找出左子树的长度，右子树的长度
+    let leftLength=inorderIndex
+    let rightLength=inorder.length-inorderIndex-1
+    //切割出来先序\中序遍历里面的左子树，右子树
+    let p_leftarr=preorder.slice(1,1+leftLength)
+    let p_rightarr=preorder.slice(1+leftLength)
+    let i_leftarr=inorder.slice(0,inorderIndex)
+    let i_rightarr=inorder.slice(inorderIndex+1)
+    root.left=buildTree(p_leftarr,i_leftarr)
+    root.right=buildTree(p_rightarr,i_rightarr)
+    return root
+};
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {void} Do not return anything, modify root in-place instead.
+ */
+ //先序遍历：先root，在左子树，再右子树
+var flatten = function(root) {
+    const arr=[]
+    function deepnode(node){
+        if(!node) return 
+        arr.push(node)
+        if(node.left) deepnode(node.left)
+        if(node.right) deepnode(node.right)
+    }
+    deepnode(root)
+    for(let i=1;i<arr.length;i++){
+      arr[i-1].left=null
+      arr[i-1].right=arr[i]
+    }
+    return arr
+};
